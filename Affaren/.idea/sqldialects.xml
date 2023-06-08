@@ -2,6 +2,6 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/affaren/sql/1-Create-Database.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/affaren/sql/2-Data.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/affaren/sql/2-Data.sql" dialect="GenericSQL" />
   </component>
 </project>
