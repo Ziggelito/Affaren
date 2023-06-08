@@ -1,0 +1,76 @@
+version: "3.9"
+
+networks:
+  storing:
+    driver: bridge
+
+services:
+  affaren:
+    image: mysql:8
+    container_name: affarenContainer
+
+    networks:
+     - storing
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+     - "3306:3306"
+    healthcheck:
+     test: ["CMD-SHELL", "exit"]
+     interval: 20s
+     timeout: 30s
+    volumes:
+      - "./affaren/sql:/docker-entrypoint-initdb.d"
+
+  Customer:
+    image: ${CUSTOMERIMAGE}
+    container_name: customerContainer
+
+    networks:
+    - storing
+    environment:
+      - MYSQL_HOST=affaren
+      - DB_DATABASE=customerdb
+      - DB_USER=customeruser
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+    - "9090:8080"
+    depends_on:
+      affaren:
+       condition: service_healthy
+
+  orders:
+    image: ${ORDERSIMAGE}
+    container_name: ordersContainer
+
+    networks:
+     - storing
+    environment:
+      - DB_USER=orderuser
+      - DB_PASSWORD=${DB_PASSWORD}
+      - MYSQL_HOST=affaren
+      - DB_DATABASE=orderdb
+      - ITEMS_SERVICE_HOST=${ITEMS_SERVICE_HOST}
+      - CUSTOMERS_SERVICE_HOST=${CUSTOMERS_SERVICE_HOST}
+    ports:
+     - "9091:8080"
+    depends_on:
+     affaren:
+      condition: service_healthy
+
+  items:
+    image: ${ITEMSIMAGE}
+    container_name: itemsContainer
+
+    networks:
+    - storing
+    environment:
+      - MYSQL_HOST=affaren
+      - DB_DATABASE=itemdb
+      - DB_USER=itemuser
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+    - "9092:8080"
+    depends_on:
+     affaren:
+      condition: service_healthy

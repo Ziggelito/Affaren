@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class Customer implements Serializable {
 
     @Id
-    @GeneratedValue
+    //@GeneratedValue
     protected long id;
     protected String name;
     protected String personNr;

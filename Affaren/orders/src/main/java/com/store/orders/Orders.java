@@ -21,20 +21,13 @@ public class Orders {
     @GeneratedValue
     protected long id;
     protected String date;
-    /*@ManyToOne
-    @JoinColumn
-    private Customer customer;
+    protected String customerId;
+    protected String itemId;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    private List<Item> items = new ArrayList<>();
-
-    public Orders(String date, Customer customer){
+    public Orders(String date, String customerId, String itemId) {
         this.date = date;
-        this.customer = customer;
+        this.customerId = customerId;
+        this.itemId = itemId;
     }
-    public void addItems(Item item) {
-        items.add(item);
-    }*/
 }

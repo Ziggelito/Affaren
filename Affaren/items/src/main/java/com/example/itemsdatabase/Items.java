@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 public class Items {
 
     @Id
-    @GeneratedValue
+    //@GeneratedValue
     protected long id;
     protected String name;
     protected String pris;
 
-    public Items(String name, String pris ){
+    public Items(String name, String pris) {
         this.name = name;
         this.pris = pris;
     }
